@@ -1,0 +1,50 @@
+name: Scheduled GitHub Pages Deployment
+
+on:
+  # Deploys on push to master
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+  # Scheduled deployment every day at midnight UTC
+  schedule:
+    - cron: "0 0 * * *"
+
+  # Allows manual triggering from the Actions tab
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Setup Node.js (if using npm or build tools)
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      # Install dependencies (if applicable)
+      - name: Install dependencies
+        run: npm install  # Remove if not needed
+
+      # Build the static site (modify if using a different framework)
+      - name: Build site
+        run: npm run build  # Modify based on your project
+
+      # Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages  # The branch to deploy to
+          folder: dist       # Adjust if build output is in a different folder
