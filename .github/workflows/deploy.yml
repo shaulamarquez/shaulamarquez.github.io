@@ -17,7 +17,7 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3 # Use 'token' here
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.PERSONAL_TOKEN }}
           publish_dir: ./build # Or the directory with your website files
           cname: shaulamarquez.github.io # Optional
           emptyCommits: true
