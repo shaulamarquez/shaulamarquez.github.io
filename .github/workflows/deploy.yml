@@ -19,5 +19,8 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./build # Or the directory with your website files
-          publish_branch: main # Deploy to the main branch
           cname: shaulamarquez.github.io # Optional
+          emptyCommits: true
+          keepFiles: false
+          forceOrphan: false
+          tagOverwrite: false
