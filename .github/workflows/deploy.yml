@@ -1,11 +1,8 @@
 name: Deploy to GitHub Pages
 
 on:
-  schedule:
-    - cron: '0 0 * * *' # Runs daily at 00:00 UTC (midnight)  Adjust cron expression as needed
-
-  # Optional: Add a manual trigger in case you need to run it outside of schedule
-  workflow_dispatch:
+  push:
+    branches: main # Trigger on pushes to the main branch
 
 jobs:
   deploy:
@@ -14,9 +11,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Build production build (if applicable)
+        run: npm run build # Or your build command
+
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v2
+        uses: peaceiris/actions-gh-pages@v3 # Use 'token' here
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}  # Use the built-in GITHUB_TOKEN secret
-          publish_dir: ./build # The directory containing your built website
-          cname: shaulamarquez.github.io # Optional: Add your custom domain
+          token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build # Or the directory with your website files
+          publish_branch: main # Deploy to the main branch
+          cname: shaulamarquez.github.io # Optional
