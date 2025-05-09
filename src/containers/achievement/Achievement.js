@@ -1,14 +1,18 @@
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 import "./Achievement.scss";
 import AchievementCard from "../../components/achievementCard/AchievementCard";
-import {achievementSection} from "../../portfolio";
-import {Fade} from "react-reveal";
+import { achievementSection, socialMediaLinks } from "../../portfolio"; // Ensure socialMediaLinks is imported
+import { Fade } from "react-reveal";
 import StyleContext from "../../contexts/StyleContext";
+import Button from "../../components/button/Button"; // Import Button component if not already imported
+
 export default function Achievement() {
-  const {isDark} = useContext(StyleContext);
+  const { isDark } = useContext(StyleContext);
+
   if (!achievementSection.display) {
     return null;
   }
+
   return (
     <Fade bottom duration={1000} distance="20px">
       <div className="main" id="achievements">
@@ -34,21 +38,28 @@ export default function Achievement() {
             </p>
           </div>
           <div className="achievement-cards-div">
-            {achievementSection.achievementsCards.map((card, i) => {
-              return (
-                <AchievementCard
-                  key={i}
-                  isDark={isDark}
-                  cardInfo={{
-                    title: card.title,
-                    description: card.subtitle,
-                    image: card.image,
-                    imageAlt: card.imageAlt,
-                    footer: card.footerLink
-                  }}
-                />
-              );
-            })}
+            {achievementSection.achievementsCards.map((card, i) => (
+              <AchievementCard
+                key={i}
+                isDark={isDark}
+                cardInfo={{
+                  title: card.title,
+                  description: card.subtitle,
+                  image: card.image,
+                  imageAlt: card.imageAlt,
+                  footer: card.footerLink,
+                }}
+              />
+            ))}
+          </div>
+          {/* ✅ Moved Button inside the Fade wrapper */}
+          <div className="achievement-button-div">
+            <Button
+              text="Certifications"
+              className="project-button"
+              href={socialMediaLinks.linkedin}
+              newTab={true}
+            />
           </div>
         </div>
       </div>
